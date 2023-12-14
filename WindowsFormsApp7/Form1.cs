@@ -33,6 +33,7 @@ namespace WindowsFormsApp7
         private int score;
         private int speed;
         private bool running;
+        private bool paused = false;
 
         public Form1()
         {
@@ -174,33 +175,21 @@ namespace WindowsFormsApp7
         {
             switch (e.KeyCode)
             {
-                case Keys.Up:
+                case Keys.W:
                     if (direction != Direction.Down)
                         direction = Direction.Up;
                     break;
-                case Keys.Down:
+                case Keys.S:
                     if (direction != Direction.Up)
                         direction = Direction.Down;
                     break;
-                case Keys.Left:
+                case Keys.A:
                     if (direction != Direction.Right)
                         direction = Direction.Left;
                     break;
-                case Keys.Right:
+                case Keys.D:
                     if (direction != Direction.Left)
                         direction = Direction.Right;
-                    break;
-                case Keys.Space:
-                    if (!running)
-                    {
-                        timer1.Start();
-                        running = true;
-                    }
-                    else
-                    {
-                        timer1.Stop();
-                        running = false;
-                    }
                     break;
             }
         }
@@ -226,6 +215,48 @@ namespace WindowsFormsApp7
             {
                 g.FillEllipse(Brushes.Red, salat.X * gridSize, salat.Y * gridSize, gridSize, gridSize);
             }
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            if (!running)
+            {
+                if (paused)
+                {
+                    timer1.Start();
+                    paused = false;
+
+                }
+                else
+                {
+                    InitializeGame();
+                    timer1.Start();
+                    running = true;
+                }
+            }
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            if (running)
+            {
+                if (paused)
+                {
+                    timer1.Start();
+                    paused = false;
+                }
+                else
+                {
+                    timer1.Stop();
+                    paused = true;
+
+                }
+            }
+        }
+
+        private void Form1_PreviewKeyDown(object sender, PreviewKeyDownEventArgs e)
+        {
+
         }
     }
 }
